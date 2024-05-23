@@ -1,6 +1,6 @@
 # Create env variables
-| Variable | Value 
-|---|---|---|
+| Variable | Value |
+|---|---|
 ENV | staging
 VERSION | 1.0
 HOST | localhost
