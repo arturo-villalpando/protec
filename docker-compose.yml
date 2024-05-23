@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16.3
+    restart: always
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    container_name: ${DB_NAME}
+    volumes:
+      - postgres-db:/var/lib/postgresql/data
+    networks:
+      - mynetwork
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: protec:${ENV}
+    container_name: protec-api
+    ports:
+      - "3000:3000"
+    environment:
+      ENV: ${ENV}
+      APP_VERSION: ${VERSION}
+      HOST: ${HOST}
+      ORIGINS: ${ORIGINS}
+      DB_CONNECTION: ${DB_CONNECTION}
+    networks:
+      - mynetwork
+    depends_on:
+      - db
+volumes:
+  postgres-db:
+    external: false
+networks:
+  mynetwork:
+    name: mynetwork

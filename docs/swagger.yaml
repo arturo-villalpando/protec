@@ -1,0 +1,332 @@
+definitions:
+  models.Earns:
+    properties:
+      earns:
+        example: 1
+        type: number
+    required:
+    - earns
+    type: object
+  models.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  models.Merchant:
+    properties:
+      commission:
+        example: 1
+        maximum: 100
+        type: number
+      createdAt:
+        example: "2022-12-10T12:00:00Z"
+        type: string
+      merchant_id:
+        example: 1
+        type: integer
+      merchant_name:
+        example: Qwerty
+        maxLength: 128
+        type: string
+      updatedAt:
+        example: "2022-12-10T12:00:00Z"
+        type: string
+    required:
+    - commission
+    - createdAt
+    - merchant_id
+    - merchant_name
+    - updatedAt
+    type: object
+  models.MerchantRequest:
+    properties:
+      commission:
+        example: 1
+        maximum: 100
+        type: number
+      merchant_name:
+        example: Qwerty
+        maxLength: 128
+        type: string
+    required:
+    - commission
+    - merchant_name
+    type: object
+  models.Transaction:
+    properties:
+      amount:
+        example: 100
+        type: number
+      commission:
+        example: 1
+        maximum: 100
+        type: number
+      createdAt:
+        example: "2022-12-10T12:00:00Z"
+        type: string
+      fee:
+        example: 1
+        type: number
+      merchant_id:
+        example: 1
+        type: integer
+      transaction_id:
+        example: 1
+        type: integer
+    required:
+    - amount
+    - commission
+    - createdAt
+    - fee
+    - merchant_id
+    - transaction_id
+    type: object
+  models.TransactionRequest:
+    properties:
+      amount:
+        example: 100
+        type: number
+      merchant_id:
+        example: 1
+        type: integer
+    required:
+    - amount
+    - merchant_id
+    type: object
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /merchant/:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Create
+        Type "Bearer" followed by a space and JWT token.
+      parameters:
+      - description: Create
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/models.MerchantRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Merchant'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - Bearer: []
+      summary: Create
+      tags:
+      - Merchants
+  /merchant/{id}:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Read
+        Type "Bearer" followed by a space and JWT token.
+      parameters:
+      - description: "1"
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Merchant'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - Bearer: []
+      summary: Read
+      tags:
+      - Merchants
+    patch:
+      consumes:
+      - application/json
+      description: |-
+        Update
+        Type "Bearer" followed by a space and JWT token.
+      parameters:
+      - description: "1"
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/models.MerchantRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Merchant'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - Bearer: []
+      summary: Update
+      tags:
+      - Merchants
+  /report/transactions/:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Read
+        Type "Bearer" followed by a space and JWT token.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Earns'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - Bearer: []
+      summary: Read
+      tags:
+      - Reports Transactions
+  /report/transactions/{id}:
+    get:
+      consumes:
+      - application/json
+      description: |-
+        Read Transaction Merchants Earns
+        Type "Bearer" followed by a space and JWT token.
+      parameters:
+      - description: "1"
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Earns'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - Bearer: []
+      summary: Read Transaction Merchants Earns
+      tags:
+      - Reports Transactions
+  /transaction/:
+    post:
+      consumes:
+      - application/json
+      description: |-
+        Create
+        Type "Bearer" followed by a space and JWT token.
+      parameters:
+      - description: Create
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/models.TransactionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Transaction'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.HTTPError'
+      security:
+      - Bearer: []
+      summary: Create
+      tags:
+      - Transactions
+swagger: "2.0"

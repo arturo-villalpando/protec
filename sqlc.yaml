@@ -1,0 +1,51 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    schema: "db/schemas/"
+    queries: "db/queries/"
+    gen:
+      go:
+        package: "db"
+        sql_package: "pgx/v5"
+        out: "internal/db"
+        emit_json_tags: true
+        emit_interface: true
+        emit_empty_slices: true
+overrides:
+  go:
+    overrides:
+      - db_type: "pg_catalog.varchar"
+        nullable: true
+        go_type:
+          type: "string"
+          pointer: true
+      - db_type: "pg_catalog.bpchar"
+        nullable: true
+        go_type:
+          type: "string"
+          pointer: true
+      - db_type: "pg_catalog.text"
+        nullable: true
+        go_type:
+          type: "string"
+          pointer: true
+      - db_type: "interface"
+        nullable: true
+        go_type:
+          type: "string"
+          pointer: true
+      - db_type: "pg_catalog.int8"
+        nullable: true
+        go_type:
+          type: "int64"
+          pointer: true
+      - db_type: "pg_catalog.int4"
+        nullable: true
+        go_type:
+          type: "int32"
+          pointer: true
+      - db_type: "pg_catalog.float8"
+        nullable: true
+        go_type:
+          type: "float64"
+          pointer: true

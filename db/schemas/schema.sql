@@ -1,0 +1,23 @@
+--
+-- Merchants
+--
+CREATE TABLE IF NOT EXISTS "merchants" (
+    "merchant_id" SERIAL NOT NULL PRIMARY KEY,
+    "merchant_name" VARCHAR(128) UNIQUE NOT NULL,
+    "commission" DOUBLE PRECISION NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+--
+-- Transactions
+--
+CREATE TABLE IF NOT EXISTS "transactions" (
+    "transaction_id" SERIAL NOT NULL PRIMARY KEY,
+    "merchant_id" INT NOT NULL REFERENCES merchants ON DELETE RESTRICT,
+    "amount" DOUBLE PRECISION NOT NULL,
+    "commission" DOUBLE PRECISION NOT NULL,
+    "fee" DOUBLE PRECISION NOT NULL,
+    "created_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
